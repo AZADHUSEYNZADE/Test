@@ -1,5 +1,12 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
 .App {
   text-align: center;
   display: flex;
   justify-content: space-around;
+}
+
+.box {
+  aspect-ratio: 1/1;
+  /* background-color: yellow; */
+  border: 2px solid red;
 }

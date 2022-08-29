@@ -1,9 +1,10 @@
 import React from "react";
-import Column from "./components/Column";
+import Squares from "./components/Squares";
+import "./App.css";
 const App = () => {
   return (
     <div>
-      <Column />
+      <Squares />
     </div>
   );
 };

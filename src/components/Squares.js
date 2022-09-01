@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -24,9 +24,24 @@ const Squares = () => {
     resolver: yupResolver(schema),
   });
 
+  // const submitForm = (data) => {
+  //   const num = Number(data.integer);
+  //   setArr(new Array(num).fill(0));
+  // };
+
   const submitForm = (data) => {
+    let intervalID;
     const num = Number(data.integer);
-    setArr(new Array(num).fill(0));
+    setArr([0]);
+    intervalID = setInterval(() => {
+      setArr((prevState) => {
+        if (prevState.length < num) {
+          return [...prevState, prevState[prevState.length - 1] + 1];
+        } else {
+          clearInterval(intervalID);
+        }
+      });
+    }, 300);
   };
 
   return (

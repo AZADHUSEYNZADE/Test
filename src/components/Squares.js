@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -25,20 +25,24 @@ const Squares = () => {
   });
 
   const submitForm = (data) => {
-    let intervalID;
-    const num = Number(data.integer);
-    setArr([0]);
-    intervalID = setInterval(() => {
-      setArr((prevState) => {
-        if (prevState.length < num) {
-          return [...prevState, prevState[prevState.length - 1] + 1];
-        } else {
-          clearInterval(intervalID);
-          return prevState;
-        }
-      });
-    }, 300);
+    setArr(Array.from({ length: data.integer }).fill());
   };
+
+  // const submitForm = (data) => {
+  //   let intervalID;
+  //   const num = Number(data.integer);
+  //   setArr([0]);
+  //   intervalID = setInterval(() => {
+  //     setArr((prevState) => {
+  //       if (prevState.length < num) {
+  //         return [...prevState, prevState[prevState.length - 1] + 1];
+  //       } else {
+  //         clearInterval(intervalID);
+  //         return prevState;
+  //       }
+  //     });
+  //   }, 1000);
+  // };
 
   return (
     <>
@@ -61,15 +65,17 @@ const Squares = () => {
         </InputGroup>
       </form>
       <p className="errorMessage"> {errors.integer?.message} </p>
-
       <Container className=" gap-5">
         <Row>
           {arr?.map((item, i) => {
             return (
               <Col
                 key={i}
-                className="box bg-primary  border-light main-col gap-5"
+                className={`box bg-primary border-light main-col gap-5 fade-in`}
                 xs={1}
+                style={{
+                  animationDelay: `${i * 300}ms`,
+                }}
               >
                 <h3 className="text-light text-center">{i + 1}</h3>
               </Col>

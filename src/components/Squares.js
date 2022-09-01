@@ -33,21 +33,34 @@ const Squares = () => {
     <>
       <form onSubmit={handleSubmit(submitForm)}>
         <InputGroup className="mb-3 w-50">
-          <Form.Control type="number" {...register("integer")} />
+          <Form.Control
+            type="number"
+            {...register("integer")}
+            className="w-100"
+          />
 
-          <Button variant="outline-secondary" id="button-addon2" type="submit">
+          <Button
+            variant="outline-secondary"
+            id="button-addon2"
+            type="submit"
+            className="bg-primary text-light"
+          >
             Button
           </Button>
         </InputGroup>
       </form>
       <p className="errorMessage"> {errors.integer?.message} </p>
 
-      <Container className="mt-5">
+      <Container className=" gap-5">
         <Row>
           {arr?.map((item, i) => {
             return (
-              <Col key={i} className="box bg-primary mt-3 border-light" xs={1}>
-                <h3 className="text-light text-center">{i}</h3>
+              <Col
+                key={i}
+                className="box bg-primary  border-light main-col gap-5"
+                xs={1}
+              >
+                <h3 className="text-light text-center">{i + 1}</h3>
               </Col>
             );
           })}

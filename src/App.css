@@ -5,8 +5,17 @@
   justify-content: space-around;
 }
 
+form {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
 .box {
   aspect-ratio: 1/1;
-  /* background-color: yellow; */
   border: 2px solid red;
+}
+.errorMessage {
+  text-align: center;
+  font-weight: bold;
 }

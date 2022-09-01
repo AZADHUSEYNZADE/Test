@@ -1,46 +1,53 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Button from "react-bootstrap/Button";
+
+const schema = yup.object().shape({
+  integer: yup.number().min(1).max(99).required(),
+});
 
 const Squares = () => {
   const [arr, setArr] = useState();
-  const { register } = useForm();
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const num = Number(e.target[0].value);
-    setArr(Array.from({ length: num }).fill(0));
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const submitForm = (data) => {
+    const num = Number(data.integer);
+    setArr(new Array(num).fill(0));
   };
 
   return (
     <>
-      <form
-        onSubmit={onSubmit}
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control
-            type="number"
-            placeholder="Enter email"
-            {...register("numbers", { required: true })}
-            min={0}
-            max={100}
-          />
-        </Form.Group>
+      <form onSubmit={handleSubmit(submitForm)}>
+        <InputGroup className="mb-3 w-50">
+          <Form.Control type="number" {...register("integer")} />
 
-        <Button type="submit " variant="primary" size="xs">
-          Submit
-        </Button>
+          <Button variant="outline-secondary" id="button-addon2" type="submit">
+            Button
+          </Button>
+        </InputGroup>
       </form>
-      <Container>
+      <p className="errorMessage"> {errors.integer?.message} </p>
+
+      <Container className="mt-5">
         <Row>
-          {arr?.map((item) => {
+          {arr?.map((item, i) => {
             return (
-              <Col className="box bg-primary" xs={1}>
-                item
+              <Col key={i} className="box bg-primary mt-3 border-light" xs={1}>
+                <h3 className="text-light text-center">{i}</h3>
               </Col>
             );
           })}

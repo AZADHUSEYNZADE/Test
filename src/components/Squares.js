@@ -24,11 +24,6 @@ const Squares = () => {
     resolver: yupResolver(schema),
   });
 
-  // const submitForm = (data) => {
-  //   const num = Number(data.integer);
-  //   setArr(new Array(num).fill(0));
-  // };
-
   const submitForm = (data) => {
     let intervalID;
     const num = Number(data.integer);
@@ -39,6 +34,7 @@ const Squares = () => {
           return [...prevState, prevState[prevState.length - 1] + 1];
         } else {
           clearInterval(intervalID);
+          return prevState;
         }
       });
     }, 300);

@@ -14,7 +14,7 @@ const schema = yup.object().shape({
 });
 
 const Squares = () => {
-  const [arr, setArr] = useState();
+  const [length, setLength] = useState(0);
 
   const {
     register,
@@ -25,24 +25,19 @@ const Squares = () => {
   });
 
   const submitForm = (data) => {
-    setArr(Array.from({ length: data.integer }).fill());
+    let intervalID;
+    let internal = data.integer;
+    intervalID = setInterval(() => {
+      setLength((prevLength) => {
+        if (prevLength < internal) {
+          return prevLength + 1;
+        } else {
+          clearInterval(intervalID);
+          return prevLength;
+        }
+      });
+    }, 300);
   };
-
-  // const submitForm = (data) => {
-  //   let intervalID;
-  //   const num = Number(data.integer);
-  //   setArr([0]);
-  //   intervalID = setInterval(() => {
-  //     setArr((prevState) => {
-  //       if (prevState.length < num) {
-  //         return [...prevState, prevState[prevState.length - 1] + 1];
-  //       } else {
-  //         clearInterval(intervalID);
-  //         return prevState;
-  //       }
-  //     });
-  //   }, 1000);
-  // };
 
   return (
     <>
@@ -67,20 +62,20 @@ const Squares = () => {
       <p className="errorMessage"> {errors.integer?.message} </p>
       <Container className=" gap-5">
         <Row>
-          {arr?.map((item, i) => {
-            return (
-              <Col
-                key={i}
-                className={`box bg-primary border-light main-col gap-5 fade-in`}
-                xs={1}
-                style={{
-                  animationDelay: `${i * 300}ms`,
-                }}
-              >
-                <h3 className="text-light text-center">{i + 1}</h3>
-              </Col>
-            );
-          })}
+          {Boolean(length) &&
+            Array.from({ length })
+              .fill()
+              ?.map((item, i) => {
+                return (
+                  <Col
+                    key={i}
+                    className="box bg-primary border-light main-col gap-5"
+                    xs={1}
+                  >
+                    <h3 className="text-light text-center">{i + 1}</h3>
+                  </Col>
+                );
+              })}
         </Row>
       </Container>
     </>
